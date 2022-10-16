@@ -1,0 +1,16 @@
+{
+  "name": "유튜브 바 투명도 조절",
+  "description": "유튜브 바 투명도 조절",
+  "version": "1.0.0",
+  "manifest_version": 3,
+  "permissions": ["storage", "tabs"],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.youtube.com/*"],
+      "js": ["content.js"]
+    }
+  ]
+}
