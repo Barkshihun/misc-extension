@@ -1,15 +1,21 @@
-const btn = document.querySelector("button");
 const input = document.querySelector("input");
 const indicator = document.querySelector("h1");
 const onEnabled = () => {
-  btn.innerText = "활성화 중";
+  input.style.visibility = "visible";
   chrome.action.setBadgeText({ text: "ON" });
   chrome.action.setBadgeBackgroundColor({ color: [255, 0, 0, 255] });
 };
 const onDisabled = () => {
-  btn.innerText = "비활성화 중";
+  input.style.visibility = "hidden";
   chrome.action.setBadgeText({ text: "OFF" });
   chrome.action.setBadgeBackgroundColor({ color: [0, 0, 255, 255] });
+};
+const sendQuery = (enabled, opacity) => {
+  chrome.tabs.query({ active: true, currentWindow: true, url: "https://www.youtube.com/*" }, ([tab]) => {
+    if (tab) {
+      chrome.tabs.sendMessage(tab.id, { enabled, opacity });
+    }
+  });
 };
 chrome.storage.local.get({ enabled: true, opacity: 0.1 }, ({ enabled, opacity }) => {
   indicator.innerText = opacity;
@@ -20,28 +26,23 @@ chrome.storage.local.get({ enabled: true, opacity: 0.1 }, ({ enabled, opacity })
     onDisabled();
   }
 });
-btn.addEventListener("click", () => {
+const init = () => {
   chrome.storage.local.get({ enabled: false }, ({ enabled }) => {
     if (enabled) {
       onDisabled();
     } else {
       onEnabled();
     }
+    sendQuery(!enabled, input.value);
     chrome.storage.local.set({ enabled: !enabled });
-    chrome.tabs.query({ active: true, currentWindow: true, url: "https://www.youtube.com/*" }, ([tab]) => {
-      if (tab) {
-        chrome.tabs.sendMessage(tab.id, { enabled: !enabled });
-      }
-    });
   });
-});
+};
 input.addEventListener("input", (event) => {
   const opacity = event.target.value;
   indicator.innerText = opacity;
   chrome.storage.local.set({ opacity });
-  chrome.tabs.query({ active: true, currentWindow: true, url: "https://www.youtube.com/*" }, ([tab]) => {
-    if (tab) {
-      chrome.tabs.sendMessage(tab.id, { opacity });
-    }
+  chrome.storage.local.get({ enabled: false }, ({ enabled }) => {
+    sendQuery(enabled, opacity);
   });
 });
+init();
