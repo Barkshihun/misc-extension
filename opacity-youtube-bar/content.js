@@ -1,3 +1,4 @@
+"use strict";
 const ytpProgressBarContainer = document.querySelector(".ytp-progress-bar-container");
 const ytpChromeControls = document.querySelector(".ytp-chrome-controls");
 const ytpPaidContentOverlayLink = document.querySelector(".ytp-paid-content-overlay-link");
