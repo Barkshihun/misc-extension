@@ -1,19 +1,8 @@
 {
   "name": "0오토리워드",
   "description": "자동 bing 리워드 획득",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "manifest_version": 3,
-  "permissions": ["declarativeNetRequest"],
-  "host_permissions": ["<all_urls>"],
-  "declarative_net_request": {
-    "rule_resources": [
-      {
-        "id": "mobile_rule",
-        "enabled": false,
-        "path": "mobile_rule.json"
-      }
-    ]
-  },
   "icons": {
     "48": "icon48.png"
   },
