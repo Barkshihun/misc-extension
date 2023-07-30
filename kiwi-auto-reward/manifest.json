@@ -1,0 +1,15 @@
+{
+  "name": "KIWI 오토리워드",
+  "description": "KIWI용",
+  "version": "1.1.1",
+  "manifest_version": 3,
+  "icons": {
+    "48": "icon48.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "48": "icon48.png"
+    }
+  }
+}
